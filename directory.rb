@@ -13,7 +13,25 @@ def input_students
         # get another name from the user
         name = gets.chomp
     end
-    #return the array of students
+
+    puts "Please enter each of the students hobbys?"
+    hobby = gets.chomp
+    while !hobby.empty? do
+        students.each do |hash|
+            hash[:hobby] = hobby
+            hobby = gets.chomp
+        end 
+    end
+
+    puts "Whats the country of Birth?"
+    country = gets.chomp
+    while !country.empty? do
+      students.each do |hash|
+        hash[:country_of_birth] = country
+        country = gets.chomp
+      end
+    end
+        #return the array of students
     students
 end
 
@@ -23,8 +41,8 @@ def print_header
 end
 def print(students)
   count = 0
-  until count == students.length
-    puts "#{students[count][:name]} (#{students[count][:cohort]} cohort)"
+  until count >= students.length
+    puts "#{students[count][:name]}, #{students[count][:hobby]}, #{students[count][:country_of_birth]} (#{students[count][:cohort]} cohort)"
     count +=1
   end
 end
