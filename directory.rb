@@ -47,26 +47,32 @@ def print_header
 end
 
 def print(students)
-  count = 0
-  until count == students.length
-    puts "Name : #{students[count][:name]}".center(25) + "Cohort: #{students[count][:cohort]}".center(25)
+  if students.empty?
+    puts "You dont have any students".center(50)
+  else
+    count = 0
+    until count == students.length
+      puts "Name : #{students[count][:name]}".center(25) + "Cohort: #{students[count][:cohort]}".center(25)
     count +=1
+    end
   end
 end
 
 def print_by_cohort(students)
+  if students.length > 0
   puts "Which cohort would you like?"
   value = gets.strip.downcase
     students.each do |student|
       puts student[:name] if student[:cohort] == value.to_sym
     end
+  end
 end
 
 def print_footer(names)
-   if names.length > 1
-    puts "Overall, we have #{names.count} great students".center(50)
-   else
+   if names.length == 1
     puts "Overall, we have #{names.count} great student".center(50)
+   else 
+    puts "Overall we have #{names.count} great students".center(50)
    end
 end
 
