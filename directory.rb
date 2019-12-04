@@ -1,5 +1,6 @@
+@students = [] # an empty array accessible to all methods
+
 def input_students
-    students = []
 
     months = {
         "" => :none,
@@ -33,12 +34,11 @@ def input_students
                 puts "Try again: what cohort are they in?"
                 cohort = months[gets.capitalize.strip]
             end
-          students << {name: name, cohort: cohort}
+          @students << {name: name, cohort: cohort}
         else 
           break
         end
-     end
-     students   
+     end  
 end 
 
 def print_header
@@ -46,42 +46,70 @@ def print_header
     puts "--------------".center(50)
 end
 
-def print(students)
-  if students.empty?
+def print_students_list
+  if @students.empty?
     puts "You dont have any students".center(50)
   else
     count = 0
-    until count == students.length
-      puts "Name : #{students[count][:name]}".center(25) + "Cohort: #{students[count][:cohort]}".center(25)
+    until count == @students.length
+      puts "Name : #{@students[count][:name]}".center(25) + "Cohort: #{@students[count][:cohort]}".center(25)
     count +=1
     end
   end
 end
 
-def print_by_cohort(students)
-  if students.length > 0
+def print_by_cohort
+  if @students.length > 0
   puts "Which cohort would you like?"
   value = gets.strip.downcase
-    students.each do |student|
+    @students.each do |student|
       puts student[:name] if student[:cohort] == value.to_sym
     end
   end
 end
 
-def print_footer(names)
-   if names.length == 1
-    puts "Overall, we have #{names.count} great student".center(50)
+def print_footer
+   if @students.length == 1
+    puts "Overall, we have #{@students.count} great student".center(50)
    else 
-    puts "Overall we have #{names.count} great students".center(50)
+    puts "Overall we have #{@students.count} great students".center(50)
    end
 end
 
-#nothing happens until call the methods
-students = input_students
-print_header
-print(students)
-print_footer(students)
-print_by_cohort(students)
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
+  end
+end
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header 
+  print_students_list
+  print_footer
+end
+
+def process(selection)
+  case selection
+    when "1"
+      input_students
+    when "2"
+      show_students
+    when "9"
+      exit
+    else
+      puts "I don't know what you mean sorry" 
+    end
+  end
+
+
+interactive_menu
 
 
 
