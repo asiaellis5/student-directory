@@ -3,18 +3,18 @@ def input_students
 
     months = {
         "" => :none,
-        "January" => :January,
-        "February" => :February,
-        "March" => :March,
-        "April" => :April,
-        "May" => :May,
-        "June" => :June,
-        "July" => :July,
-        "August" => :August,
-        "September" => :September,
-        "October" => :October,
-        "November" => :November,
-        "December" => :December
+        "January" => :january,
+        "February" => :february,
+        "March" => :march,
+        "April" => :april,
+        "May" => :may,
+        "June" => :june,
+        "July" => :july,
+        "August" => :august,
+        "September" => :september,
+        "October" => :october,
+        "November" => :november,
+        "December" => :december
         }
     
      while true do
@@ -33,28 +33,33 @@ def input_students
                 puts "Try again: what cohort are they in?"
                 cohort = months[gets.capitalize.chomp]
             end
-
-        
           students << {name: name, cohort: cohort}
-          puts "Now we have #{students.count} students"
         else 
           break
         end
      end
-     students
-     
+     students   
 end 
 
 def print_header
     puts "The students of Villains Academy".center(50)
     puts "--------------".center(50)
 end
+
 def print(students)
   count = 0
   until count == students.length
     puts "Name : #{students[count][:name]}".center(25) + "Cohort: #{students[count][:cohort]}".center(25)
     count +=1
   end
+end
+
+def print_by_cohort(students)
+  puts "Which cohort would you like?"
+  value = gets.chomp.downcase
+    students.each do |student|
+      puts student[:name] if student[:cohort] == value.to_sym
+    end
 end
 
 def print_footer(names)
@@ -65,6 +70,8 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
+print_by_cohort(students)
+
 
 
 
