@@ -63,8 +63,13 @@ def print_by_cohort(students)
 end
 
 def print_footer(names)
+   if names.length > 1
     puts "Overall, we have #{names.count} great students".center(50)
+   else
+    puts "Overall, we have #{names.count} great student".center(50)
+   end
 end
+
 #nothing happens until call the methods
 students = input_students
 print_header
