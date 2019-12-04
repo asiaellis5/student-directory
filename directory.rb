@@ -19,19 +19,19 @@ def input_students
     
      while true do
      puts "Would you like to add a new person yes or no, if no hit return twice."
-        answer = gets.chomp
+        answer = gets.strip
         if !answer.empty?
           puts "what is the name of the person?"
-          name = gets.chomp
+          name = gets.strip
             if name.empty?
                 name = "none"
             end
 
           puts "what cohort are they in?"
-          cohort = months[gets.capitalize.chomp]
+          cohort = months[gets.capitalize.strip]
             while cohort == nil do
                 puts "Try again: what cohort are they in?"
-                cohort = months[gets.capitalize.chomp]
+                cohort = months[gets.capitalize.strip]
             end
           students << {name: name, cohort: cohort}
         else 
@@ -56,7 +56,7 @@ end
 
 def print_by_cohort(students)
   puts "Which cohort would you like?"
-  value = gets.chomp.downcase
+  value = gets.strip.downcase
     students.each do |student|
       puts student[:name] if student[:cohort] == value.to_sym
     end
