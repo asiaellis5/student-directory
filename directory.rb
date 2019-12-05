@@ -1,4 +1,6 @@
 @students = [] # an empty array accessible to all methods
+@filename = "students.csv"
+@user_chosen_file = ""
 
 def input_students
 
@@ -99,6 +101,15 @@ def show_students
   print_footer
 end
 
+def choose_file
+  puts "Which file would you like to use?"
+  @user_chosen_file = STDIN.gets.chomp
+  if @user_chosen_file.nil? || !File.exists?(@user_chosen_file)
+    puts "File does not exist, using file #{@filename}"
+    @user_chosen_file = @filename
+  end
+end
+
 def process(selection)
   case selection
     when "1"
@@ -106,9 +117,11 @@ def process(selection)
     when "2"
       show_students
     when "3"
+      choose_file
       save_students
       puts "You saved the list to students.csv"
     when "4"
+      choose_file
       @students = []
       load_students
       puts "You loaded the students from students.csv"
@@ -121,7 +134,7 @@ def process(selection)
 
   def save_students
     # open the file for writing
-    file = File.open("students.csv", "w")
+    file = File.open(@user_chosen_file, "w")
     #iterate over the array of students
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
@@ -131,7 +144,7 @@ def process(selection)
     file.close
   end
 
-  def load_students(filename = "students.csv")
+  def load_students(filename = @user_chosen_file)
     file = File.open(filename, "r")
     file.readlines.each do |line|
       name, cohort = line.chomp.split(',')
@@ -143,7 +156,7 @@ def process(selection)
   def try_load_students
     filename = ARGV.first
     if filename.nil?
-      load_students
+      load_students(@filename)
       puts "Loaded #{@students.count} from students.csv"
     elsif File.exists?(filename)
       load_students(filename)
