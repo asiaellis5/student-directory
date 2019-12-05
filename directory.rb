@@ -106,10 +106,12 @@ def process(selection)
     when "2"
       show_students
     when "3"
-      save_students 
+      save_students
+      puts "You saved the list to students.csv"
     when "4"
       @students = []
       load_students
+      puts "You loaded the students from students.csv"
     when "9"
       exit
     else
@@ -133,7 +135,7 @@ def process(selection)
     file = File.open(filename, "r")
     file.readlines.each do |line|
       name, cohort = line.chomp.split(',')
-      add_students(name, cohort)
+      add_students(name, cohort)  
     end
     file.close
   end
@@ -158,7 +160,6 @@ def process(selection)
 
 try_load_students
 interactive_menu
-
 
 
 
