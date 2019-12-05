@@ -108,6 +108,7 @@ def process(selection)
     when "3"
       save_students 
     when "4"
+      @students = []
       load_students
     when "9"
       exit
@@ -139,12 +140,14 @@ def process(selection)
 
   def try_load_students
     filename = ARGV.first
-    return if filename.nil?
-    if File.exists?(filename)
+    if filename.nil?
+      load_students
+      puts "Loaded #{@students.count} from students.csv"
+    elsif File.exists?(filename)
       load_students(filename)
-        puts "Loaded #{@students.count} from #{filename}"
+      puts "Loaded #{@students.count} from #{filename}"
     else
-      puts "Sorry #{filename} doesn't exist."
+      puts "Sorry, #{filename} doesn't exist."
       exit
     end
   end
