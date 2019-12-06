@@ -134,37 +134,37 @@ def process(selection)
     end
   end
 
+  def save_students
+    CSV.open("./#{@user_chosen_file}", "w") do |csv|
+      @students.each do |student|
+        student_data = [student[:name], student[:cohort]]
+        csv << student_data
+      end
+    end
+  end
+
+
   # def save_students
-  #   CSV.open("./#{@user_chosen_file}", "w") do |csv|
+  #   file = File.open(@user_chosen_file, "w") do |file|
   #     @students.each do |student|
   #       student_data = [student[:name], student[:cohort]]
   #       csv_line = student_data.join(",")
-  #       csv << csv_line
+  #       file.puts csv_line
   #     end
   #   end
   # end
 
-
-  def save_students
-    file = File.open(@user_chosen_file, "w") do |file|
-      @students.each do |student|
-        student_data = [student[:name], student[:cohort]]
-        csv_line = student_data.join(",")
-        file.puts csv_line
-      end
-    end
-  end
-
   def load_students(filename = @user_chosen_file)
-    file = File.open(filename, "r") do |file|
-      file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      add_students(name, cohort) 
-      end
+    CSV.foreach("./#{filename}") do |row|
+     name, cohort = row
+     add_students(name, cohort)
     end
-  end
+ end
+   # file = File.open(filename, "r") do |file|
+   #   file.readlines.each do |line|
+   #   name, cohort = line.chomp.split(',')
+   #   add_students(name, cohort) 
     
-  
 
   def try_load_students
     filename = ARGV.first
